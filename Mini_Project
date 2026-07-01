@@ -1,0 +1,68 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+names = []
+ages =[]
+marks = []
+study_hours = []
+
+for i in range(5):
+    name = input("Enter name: ")
+    age = int(input("Enter age: "))
+    mark = int(input("Enter marks: "))
+    study_hour = int(input("Enter study hours: "))
+    
+    names.append(name)
+    ages.append(age)
+    marks.append(mark)
+    study_hours.append(study_hour)
+    
+    student = {
+        "name": names,
+        "age": ages,
+        "marks": marks,
+        "study_hours": study_hours
+    }
+    
+df = pd.DataFrame(student)
+df.to_csv("students.csv", index=False)
+df = pd.read_csv("students.csv")
+print(df)
+    
+plt.plot(df["name"], df["marks"])
+plt.title("Marks of Students")
+plt.xlabel("Names")
+plt.ylabel("Marks")
+plt.show()
+    
+plt.bar(df["name"], df["marks"],color='orange')
+plt.title("Marks of Students")
+plt.xlabel("Names")
+plt.ylabel("Marks")
+plt.show()
+
+plt.pie(df["study_hours"], labels=df["name"], autopct='%1.1f%%')
+plt.title("Study Hours of Students")
+plt.show()
+
+plt.hist(df["marks"], bins=5, color='green', edgecolor='black')
+plt.title("Marks of Students")
+plt.xlabel("Marks")
+plt.ylabel("Frequency")
+plt.show()
+
+plt.scatter(df["study_hours"], df["marks"], color='red', marker='*', s=200)
+plt.title("Study Hours vs Marks")
+plt.xlabel("Study Hours")
+plt.ylabel("Marks")
+plt.show()
+
+
+print("Topper Student:")
+print(df[df["marks"] == df["marks"].max()])
+
+print("Youngest Student:")
+print(df[df["age"] == df["age"].min()])
+
+print("Number of Students who scored above average marks:")
+print(len(df[df["marks"] > df["marks"].mean()]))
